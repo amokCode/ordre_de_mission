@@ -1,0 +1,21 @@
+/*
+|--------------------------------------------------------------------------
+| |MODEL_TITLE| Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => '|MODEL_NAME|'], function () {
+    Route::get('index', '|CONTROLLER_NAME|@index')->name('|MODEL_NAME|.index'); // Liste des |MODEL_NAME|s
+
+    Route::get('create', '|CONTROLLER_NAME|@create')->name('|MODEL_NAME|.create'); // Formulaire de création de |MODEL_NAME|
+    Route::post('store', '|CONTROLLER_NAME|@store')->name('|MODEL_NAME|.store'); // Enrégistrement de |MODEL_NAME|
+
+    Route::get('{id}/show', '|CONTROLLER_NAME|@show')->name('|MODEL_NAME|.show'); //Informations sur |MODEL_NAME|
+
+    Route::get('{id}/edit', '|CONTROLLER_NAME|@edit')->name('|MODEL_NAME|.edit'); //Formulaire d'édition de |MODEL_NAME|
+    Route::post('{id}/update', '|CONTROLLER_NAME|@update')->name('|MODEL_NAME|.update'); // Enregistrement des modification de |MODEL_NAME|
+
+    Route::post('destroy', '|CONTROLLER_NAME|@destroy')->name('|MODEL_NAME|.destroy'); // Suppression de |MODEL_NAME|
+    Route::post('destroyAll', '|CONTROLLER_NAME|@destroyAll')->name('|MODEL_NAME|.destroyAll'); // Suppression de plusieurs |MODEL_NAME|s
+
+});

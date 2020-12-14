@@ -3519,7 +3519,7 @@ table.table-inbox tbody tr.checked {
 	24. Template Options
 -----------------------*/
 
-.skin-settings {
+/* .skin-settings {
 	z-index: 999;
 	position: fixed;
 	top: 50%;
@@ -3609,7 +3609,7 @@ table.table-inbox tbody tr.checked {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-}
+} */
 
 /*-----------------
 	25. Responsive

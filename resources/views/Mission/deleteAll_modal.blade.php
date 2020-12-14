@@ -25,7 +25,7 @@
         })
         $.ajax({
             type: "post",
-            url: "{{ route('car.destroyAll') }}",
+            url: "{{ route('mission.destroyAll') }}",
             data: {ids: $(".elements").data("ids")},
             success: function (response) {
                 $("#deleteAllElement").modal('hide')

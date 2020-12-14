@@ -33,18 +33,18 @@ Route::get('/', function () {
 //     Route::post('destroyAll', 'ElementController@destroyAll')->name('element.destroyAll'); // Supprimer plusieurs elements
 // });
 
-Route::group(['prefix' => 'car'], function () {
-    Route::get('index', 'CarController@index')->name('car.index'); // Liste des cars
+Route::group(['prefix' => 'mission'], function () {
+    Route::get('index', 'MissionController@index')->name('mission.index'); // Liste des missions
 
-    Route::get('create', 'CarController@create')->name('car.create'); // Formulaire de création de car
-    Route::post('store', 'CarController@store')->name('car.store'); // Enrégistrement d'une car
+    Route::get('create', 'MissionController@create')->name('mission.create'); // Formulaire de création de mission
+    Route::post('store', 'MissionController@store')->name('mission.store'); // Enrégistrement d'une mission
 
-    Route::get('{id}/show', 'CarController@show')->name('car.show'); // Informations sur une car
+    Route::get('{id}/show', 'MissionController@show')->name('mission.show'); // Informations sur une mission
 
-    Route::get('{id}/edit', 'CarController@edit')->name('car.edit'); // Formulaire pour éditer une car
-    Route::post('{id}/update', 'CarController@update')->name('car.update'); // Enregistrer les modifications sur une car
+    Route::get('{id}/edit', 'MissionController@edit')->name('mission.edit'); // Formulaire pour éditer une mission
+    Route::post('{id}/update', 'MissionController@update')->name('mission.update'); // Enregistrer les modifications sur une mission
 
-    Route::post('destroy', 'CarController@destroy')->name('car.destroy'); // Supprimer une car
+    Route::post('destroy', 'MissionController@destroy')->name('mission.destroy'); // Supprimer une mission
 
-    Route::post('destroyAll', 'CarController@destroyAll')->name('car.destroyAll'); // Supprimer plusieurs cars
+    Route::post('destroyAll', 'MissionController@destroyAll')->name('mission.destroyAll'); // Supprimer plusieurs missions
 });

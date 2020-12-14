@@ -7,17 +7,17 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            @include('Car.delete_modal')
-            @include('Car.deleteAll_modal')
+            @include('Mission.delete_modal')
+            @include('Mission.deleteAll_modal')
             <div class="form-group text-ridght">
                 <button class="btn bg-danger-light btn-delete-all" data-togmgle="tooltip" data-plalcement="top"
                     title="Supprimer" data-toggle="modal" data-target="#deleteAllElement"><i
                         class="fa fa-trash"></i></button>
-                <a href="{{ route('car.index') }}" class="btn bg-warning-light" data-toggle="tooltip"
+                <a href="{{ route('mission.index') }}" class="btn bg-warning-light" data-toggle="tooltip"
                     data-placement="top" title="Rafraîchir"><i class="fa fa-refresh"></i></a>
                 <a href="" class="btn bg-success-light" data-toggle="tooltip" data-placement="top" title="Imprimer"><i
                         class="fa fa-print"></i></a>
-                <a href="{{ route('car.create') }}" class="btn-nav btn btn-primary pull-right"><i
+                <a href="{{ route('mission.create') }}" class="btn-nav btn btn-primary pull-right"><i
                         class="fa fa-plus"></i> Ajouter </a>
 
             </div>
@@ -55,11 +55,11 @@
                                         <td data-id="{{ $car->id }}">#{{ $loop->index + 1 }}</td>
                                         <td>{{ $car->nom }}</td>
                                         <td>
-                                            <a href="{{ route('car.show', $car->id) }}"
+                                            <a href="{{ route('mission.show', $car->id) }}"
                                                 class="btn bg-success-light btn-nav btn-sm mr-1" title="Voir">
                                                 <span class="text-success"><i class="fa fa-eye"></i> Voir</span>
                                             </a>
-                                            <a href="{{ route('car.edit', $car->id) }}"
+                                            <a href="{{ route('mission.edit', $car->id) }}"
                                                 class="btn bg-warning-light btn-nav btn-sm mr-1" title="Modifier">
                                                 <span class="text-warning"><i class="fa fa-pencil-square-o "></i>
                                                     Modifier</span>

@@ -2,12 +2,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprimer un Car</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Supprimer une Mission</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">Etes-vous sûr de supprimer ce Car <span data-id="" class="nomElement"></span>?</div>
+            <div class="modal-body">Etes-vous sûr de supprimer cette Mission <span data-id="" class="nomElement"></span>?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 <a href="#" class="btn btn-danger btn-delete-element"><i class="fa fa-trash"></i> Supprimer</a>
@@ -28,7 +28,7 @@
         })
         $.ajax({
             type: "post",
-            url: "{{ route('car.destroy') }}",
+            url: "{{ route('mission.destroy') }}",
             data: {id: $(".nomElement").data("id")},
             success: function (response) {
                 console.log(response)

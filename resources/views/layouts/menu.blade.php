@@ -17,10 +17,10 @@
                     </ul>
                 </li> --}}
                 <li class="submenu">
-                    <a href="#"><i class="fe fe-cart"></i> <span> Cars</span> <span class="menu-arrow"></span></a>
+                    <a href="#"><i class="fe fe-cart"></i> <span> Mission</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li><a class="item-nav" href="{{ route('car.create') }}">Ajouter</a></li>
-                        <li><a class="item-nav" href="{{ route('car.index') }}">Liste</a></li>
+                        <li><a class="item-nav" href="{{ route('mission.create') }}">Ajouter</a></li>
+                        <li><a class="item-nav" href="{{ route('mission.index') }}">Liste</a></li>
                     </ul>
                 </li>
                 <li class="menu-title">

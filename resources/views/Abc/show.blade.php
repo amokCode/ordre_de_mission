@@ -1,0 +1,1 @@
+resources/views/Abc/show.blade.php

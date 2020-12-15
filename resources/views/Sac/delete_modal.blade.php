@@ -27,7 +27,7 @@
         })
         $.ajax({
             type: "post",
-            url: "{{ route('mission.destroy') }}",
+            url: "{{ route('sac.destroy') }}",
             data: {id: $(".nomElement").data("id")},
             success: function (response) {
                 console.log(response)

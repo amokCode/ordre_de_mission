@@ -1,0 +1,17 @@
+<div class="col-md-6">
+    <div class="form-group">
+        <label> Text input:</label>
+        <input
+            required
+            type="text"
+            name=""
+            class="form-control
+                @error('') is-invalid @enderror"
+            value="">
+        @error('')
+            <span class="invalid-feedback">
+                {{ $errors->first('') }}
+            </span>
+        @enderror
+    </div>
+</div>

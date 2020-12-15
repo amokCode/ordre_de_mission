@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('Mission.form', [$title='Modifier Mission', $show=false])
+@include('{{ modelName }}.form', [$title='Modifier {{ modelName }}', $show=false])
 
 @endsection
 

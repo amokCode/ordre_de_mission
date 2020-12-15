@@ -1,7 +1,7 @@
 @extends((request()->ajax() ? 'layouts.master' : 'layouts.app'))
 
 @section('content')
-    @include('Mission.form', [$title='Nouvelle Mission', $show=false])
+    @include('Mission.form', [$title='Nouvel Mission', $show=false])
 @endsection
 
 @section('script')

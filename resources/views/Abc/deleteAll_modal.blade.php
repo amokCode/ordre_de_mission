@@ -1,1 +1,0 @@
-resources/views/Abc/deleteAll_modal.blade.php

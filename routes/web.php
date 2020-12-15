@@ -48,3 +48,66 @@ Route::group(['prefix' => 'mission'], function () {
 
     Route::post('destroyAll', 'MissionController@destroyAll')->name('mission.destroyAll'); // Supprimer plusieurs missions
 });
+/*
+|--------------------------------------------------------------------------
+| Luc Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'luc'], function () {
+    Route::get('index', 'LucController@index')->name('luc.index'); // Liste des lucs
+
+    Route::get('create', 'LucController@create')->name('luc.create'); // Formulaire de création de luc
+    Route::post('store', 'LucController@store')->name('luc.store'); // Enrégistrement de luc
+
+    Route::get('{id}/show', 'LucController@show')->name('luc.show'); //Informations sur luc
+
+    Route::get('{id}/edit', 'LucController@edit')->name('luc.edit'); //Formulaire d'édition de luc
+    Route::post('{id}/update', 'LucController@update')->name('luc.update'); // Enregistrement des modification de luc
+
+    Route::post('destroy', 'LucController@destroy')->name('luc.destroy'); // Suppression de luc
+    Route::post('destroyAll', 'LucController@destroyAll')->name('luc.destroyAll'); // Suppression de plusieurs lucs
+
+});
+/*
+|--------------------------------------------------------------------------
+| Sac Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'sac'], function () {
+    Route::get('index', 'SacController@index')->name('sac.index'); // Liste des sacs
+
+    Route::get('create', 'SacController@create')->name('sac.create'); // Formulaire de création de sac
+    Route::post('store', 'SacController@store')->name('sac.store'); // Enrégistrement de sac
+
+    Route::get('{id}/show', 'SacController@show')->name('sac.show'); //Informations sur sac
+
+    Route::get('{id}/edit', 'SacController@edit')->name('sac.edit'); //Formulaire d'édition de sac
+    Route::post('{id}/update', 'SacController@update')->name('sac.update'); // Enregistrement des modification de sac
+
+    Route::post('destroy', 'SacController@destroy')->name('sac.destroy'); // Suppression de sac
+    Route::post('destroyAll', 'SacController@destroyAll')->name('sac.destroyAll'); // Suppression de plusieurs sacs
+
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Sac Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'sac'], function () {
+    Route::get('index', 'SacControllerController@index')->name('sac.index'); // Liste des sacs
+
+    Route::get('create', 'SacControllerController@create')->name('sac.create'); // Formulaire de création de sac
+    Route::post('store', 'SacControllerController@store')->name('sac.store'); // Enrégistrement de sac
+
+    Route::get('{id}/show', 'SacControllerController@show')->name('sac.show'); //Informations sur sac
+
+    Route::get('{id}/edit', 'SacControllerController@edit')->name('sac.edit'); //Formulaire d'édition de sac
+    Route::post('{id}/update', 'SacControllerController@update')->name('sac.update'); // Enregistrement des modification de sac
+
+    Route::post('destroy', 'SacControllerController@destroy')->name('sac.destroy'); // Suppression de sac
+    Route::post('destroyAll', 'SacControllerController@destroyAll')->name('sac.destroyAll'); // Suppression de plusieurs sacs
+
+});

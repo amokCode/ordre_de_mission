@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('Mission.form', [$title='Modifier Mission', $show=false])
+@include('Sac.form', [$title='Détails de Element', $show=true])
 
 @endsection
 

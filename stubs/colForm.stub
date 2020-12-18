@@ -1,17 +1,12 @@
-<div class="col-md-6">
-    <div class="form-group">
-        <label> Text input:</label>
-        <input
-            required
-            type="text"
-            name=""
-            class="form-control
-                @error('') is-invalid @enderror"
-            value="">
-        @error('')
-            <span class="invalid-feedback">
-                {{ $errors->first('') }}
-            </span>
-        @enderror
-    </div>
-</div>
+                        <!-- Champ {{ name }} -->
+                        <div class="col-md-{{ size }}">
+                            <div class="form-group">
+                                <label> {{ label }}:</label>
+                                <input class="form-control" {{ infos }}value="{{ ${{ modelVariable }}->{{ migrationName }} ?? old('{{ name }}') }}" {{ ($show) ? 'disabled' : ''}}>
+                                {{-- @error('')
+                                    <span class="invalid-feedback">
+                                        {{ $errors->first('') }}
+                                    </span>
+                                @enderror --}}
+                            </div>
+                        </div>

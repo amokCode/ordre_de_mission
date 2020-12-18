@@ -1,0 +1,17 @@
+<div class="col-md-{{ size }}">
+                            <div class="form-group">
+                                <label> {{ label }}:</label>
+                                <input
+                                    {{ singleAttribute }}
+                                    type="{{ type }}"
+                                    name="{{ name }}_{{ modelValue }}"
+                                    class="form-control"
+                                    placeholder="{{ placeholder }}"
+                                    value="{{ ${{ modelValue }}->nom ?? old('{{ name }}_{{ modelValue }}') }}" {{ ($show) ? 'disabled' : ''}}>
+                                {{-- @error('')
+                                    <span class="invalid-feedback">
+                                        {{ $errors->first('') }}
+                                    </span>
+                                @enderror --}}
+                            </div>
+                        </div>

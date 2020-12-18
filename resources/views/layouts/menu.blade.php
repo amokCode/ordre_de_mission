@@ -23,6 +23,13 @@
                         <li><a class="item-nav" href="{{ route('mission.index') }}">Liste</a></li>
                     </ul>
                 </li>
+                <li class="submenu">
+                    <a href="#"><i class="fe fe-cart"></i> <span> Eleve</span> <span class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li><a class="item-nav" href="{{ route('eleve.create') }}">Ajouter</a></li>
+                        <li><a class="item-nav" href="{{ route('eleve.index') }}">Liste</a></li>
+                    </ul>
+                </li>
                 <li class="menu-title">
                     <span>Pages</span>
                 </li>

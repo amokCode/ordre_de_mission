@@ -93,21 +93,21 @@ Route::group(['prefix' => 'sac'], function () {
 
 /*
 |--------------------------------------------------------------------------
-| Sac Routes
+| Eleve Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'sac'], function () {
-    Route::get('index', 'SacControllerController@index')->name('sac.index'); // Liste des sacs
+Route::group(['prefix' => 'eleve'], function () {
+    Route::get('index', 'EleveController@index')->name('eleve.index'); // Liste des eleves
 
-    Route::get('create', 'SacControllerController@create')->name('sac.create'); // Formulaire de création de sac
-    Route::post('store', 'SacControllerController@store')->name('sac.store'); // Enrégistrement de sac
+    Route::get('create', 'EleveController@create')->name('eleve.create'); // Formulaire de création de eleve
+    Route::post('store', 'EleveController@store')->name('eleve.store'); // Enrégistrement de eleve
 
-    Route::get('{id}/show', 'SacControllerController@show')->name('sac.show'); //Informations sur sac
+    Route::get('{id}/show', 'EleveController@show')->name('eleve.show'); //Informations sur eleve
 
-    Route::get('{id}/edit', 'SacControllerController@edit')->name('sac.edit'); //Formulaire d'édition de sac
-    Route::post('{id}/update', 'SacControllerController@update')->name('sac.update'); // Enregistrement des modification de sac
+    Route::get('{id}/edit', 'EleveController@edit')->name('eleve.edit'); //Formulaire d'édition de eleve
+    Route::post('{id}/update', 'EleveController@update')->name('eleve.update'); // Enregistrement des modification de eleve
 
-    Route::post('destroy', 'SacControllerController@destroy')->name('sac.destroy'); // Suppression de sac
-    Route::post('destroyAll', 'SacControllerController@destroyAll')->name('sac.destroyAll'); // Suppression de plusieurs sacs
+    Route::post('destroy', 'EleveController@destroy')->name('eleve.destroy'); // Suppression de eleve
+    Route::post('destroyAll', 'EleveController@destroyAll')->name('eleve.destroyAll'); // Suppression de plusieurs eleves
 
 });

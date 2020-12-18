@@ -8,6 +8,7 @@ use File;
 use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
+use stdClass;
 
 class MakeCrudCommand extends Command
 {
@@ -60,9 +61,9 @@ class MakeCrudCommand extends Command
         // $this->appendController($this->argument('name'));
 
         // // Créé les vues et les met à jour
-        $this->createViews($this->argument('name'));
+        // $this->createViews($this->argument('name'));
 
-        // $this->appendForm($this->argument('name'));
+        $this->appendForm($this->argument('name'));
 
         // // Met à jour les routes
         // $this->appendRoutes($this->argument('name'));
@@ -83,7 +84,7 @@ class MakeCrudCommand extends Command
     {
         $modelName = ucfirst($name);
 
-        $modelContent = '{'.PHP_EOL."\t".'protected $guarded = [];';
+        $modelContent = '{' . PHP_EOL . "\t" . 'protected $guarded = [];';
 
         $modelPath = '';
 
@@ -109,7 +110,7 @@ class MakeCrudCommand extends Command
 
         $modelVariable = strtolower($name);
 
-        $newViewContent = $this->files->get('stubs/'.$viewName.'.view.stub');
+        $newViewContent = $this->files->get('stubs/' . $viewName . '.view.stub');
 
         $newViewContent = str_replace('{{ modelVariable }}', $modelVariable, $newViewContent);
 
@@ -117,15 +118,16 @@ class MakeCrudCommand extends Command
 
         // Efface le contenu du fichier
         $this->files->replace(
-            app_path('../resources/views/'.$modelName.'/'.$viewName.'.blade.php'), ''
+            app_path('../resources/views/' . $modelName . '/' . $viewName . '.blade.php'),
+            ''
         );
 
         $this->files->append(
-            app_path('../resources/views/'.$modelName.'/'.$viewName.'.blade.php'),
+            app_path('../resources/views/' . $modelName . '/' . $viewName . '.blade.php'),
             $newViewContent
         );
 
-        $this->info('La vue ' .$modelName. '/'.$viewName.'.blade.php a été bien mis à jour');
+        $this->info('La vue ' . $modelName . '/' . $viewName . '.blade.php a été bien mis à jour');
     }
 
     /**
@@ -138,7 +140,7 @@ class MakeCrudCommand extends Command
      */
     public function findFilePath(array $files, string $fileName)
     {
-        foreach($files as $file) {
+        foreach ($files as $file) {
             // Vérifie le model
             if ($file == $fileName) {
                 return app_path($fileName);
@@ -148,7 +150,7 @@ class MakeCrudCommand extends Command
 
     public function appendController(string $name)
     {
-        $controllerName = ucfirst($name).'Controller';
+        $controllerName = ucfirst($name) . 'Controller';
 
         $modelName = ucfirst($name);
 
@@ -156,13 +158,13 @@ class MakeCrudCommand extends Command
 
         $controllerStub = 'stubs/controller.model.stub';
 
-        $controllerPath = $this->findFilePath(scandir('app/Http/Controllers'), "$controllerName.php");
+        $controllerPath = $this->findFilePath(scandir('app/Http/Controllers/'), "$controllerName.php");
 
         $newControllerContent = $this->files->get($controllerStub);
 
         $newControllerContent = str_replace('{{ namespace }}', 'App\Http\Controllers', $newControllerContent);
 
-        $newControllerContent = str_replace('{{ namespacedModel }}', 'App\\'.$modelName, $newControllerContent);
+        $newControllerContent = str_replace('{{ namespacedModel }}', 'App\\' . $modelName, $newControllerContent);
 
         $newControllerContent = str_replace('{{ class }}', $controllerName, $newControllerContent);
 
@@ -197,14 +199,13 @@ class MakeCrudCommand extends Command
 
         foreach ($views as $view) {
             // Stocke dans path le chemin de chaque vue
-            $path = $this->viewPath($folder.'.'.$view);
+            $path = $this->viewPath($folder . '.' . $view);
 
             // Créés le dossier
             $this->createDir($path);
 
             // Si la vue existait deja, donne un message d'erreur
-            if ($this->files->exists($path))
-            {
+            if ($this->files->exists($path)) {
                 $this->error("File {$path} already exists!");
             }
 
@@ -242,8 +243,7 @@ class MakeCrudCommand extends Command
     {
         $dir = dirname($path);
 
-        if (!file_exists($dir))
-        {
+        if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
     }
@@ -254,7 +254,7 @@ class MakeCrudCommand extends Command
 
         $modelVariable = strtolower($name);
 
-        $controllerName = $modelName.'Controller';
+        $controllerName = $modelName . 'Controller';
 
         $newRoutesContent = $this->files->get('stubs/routes.stub');
 
@@ -262,65 +262,282 @@ class MakeCrudCommand extends Command
 
         $newRoutesContent = str_replace('{{ modelVariable }}', $modelVariable, $newRoutesContent);
 
-        $newRoutesContent = str_replace('{{ controllerName }}', $controllerName . 'Controller', $newRoutesContent);
+        $newRoutesContent = str_replace('{{ controllerName }}', $controllerName, $newRoutesContent);
 
         $this->files->append(
             app_path('../routes/web.php'),
             $newRoutesContent
         );
 
-        $this->info('Les routes de ' .$modelName. ' ont été bien ajouté');
+        $this->info('Les routes de ' . $modelName . ' ont été bien ajouté');
     }
 
     public function getMigrationField(string $name)
     {
         $modelName = ucfirst($name);
+        $class = "App\\$modelName";
 
-        $instance = new Mission;
+        $instance = new $class;
 
         $table = $instance->getTable();
+
         $columns = Schema::getColumnListing($table);
 
+        $columns = $this->ignoreMigrationField(['id', 'created_at', 'updated_at'], $columns);
+
         return $columns;
+    }
+
+    public function ignoreMigrationField(array $ignoreFields, array $data)
+    {
+        foreach ($ignoreFields as $ignoreField) {
+            //delete element in array by value "green"
+            if (($key = array_search($ignoreField, $data)) !== false) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
     public function appendForm(string $name)
     {
         $modelName = ucfirst($name);
 
-        // $modelVariable = strtolower($name);
+        $modelVariable = lcfirst($name);
 
-        $formFieldsNames = $this->getMigrationField('Mission');
+        $formInputsNames = [];
 
-        foreach ($formFieldsNames as $fieldName) {
+        // $rowContent = '';
 
+        // Liste des champs d'une migration spécifique depuis le model
+        foreach ($this->getMigrationField($modelName) as $migrationField) {
+            $formInputsNames[] = $migrationField . "_" . $modelVariable;
         }
-        $rowContent = $this->fillFormRow();
 
+        // Informations sur chaque champs pour le formulaire
+        $inputsInformations = $this->formInputsInformations($formInputsNames);
+        // $this->info($answers);
+
+        // Lignes du formulaire basé sur les informations des champs de la migration
+        $rowContent = $this->getFormRow($inputsInformations, $modelVariable);
+
+        // dd($rowContent);
+
+        // $rowContent = $this->getFormRow($formInputsNames, $modelName);
+
+        // $this->info($rowContent);
+
+        // // Prototype du formulaire
         $newFormContent = $this->files->get('stubs/form.view.stub');
 
+        // // Spécifie le nom du modele lié au formulaire
+        $newFormContent = str_replace('{{ modelName }}', $modelName, $newFormContent);
+
+        // // Spécifie lea variable du modele lié au formulaire
+        $newFormContent = str_replace('{{ modelVariable }}', $modelVariable, $newFormContent);
+
+        // // Charge les différentes lignes du formulaire
         $newFormContent = str_replace('{{ rowContent }}', $rowContent, $newFormContent);
 
-        // Efface le contenu du fichier
+        // // Efface le contenu du fichier du formulaire
         $this->files->replace(
-            app_path('../resources/views/'.$modelName.'/form.blade.php'), ''
+            app_path('../resources/views/' . $modelName . '/form.blade.php'),
+            ''
         );
 
+        // Ajoute les informations du prototype dans le fichier du formulaire
         $this->files->append(
-            app_path('../resources/views/'.$modelName.'/form.blade.php'), $newFormContent
+            app_path('../resources/views/' . $modelName . '/form.blade.php'),
+            $newFormContent
         );
 
-        $this->info("Le formulaire de $modelName.blade.php a été bien mis à jour");
+        $this->info("Le formulaire de $modelName a été bien mis à jour");
     }
 
-    public function fillFormRow()
+    public function array_to_obj($array, &$obj)
     {
-        $this->fillFormCol();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $obj->$key = new stdClass();
+                $this->array_to_obj($value, $obj->$key);
+            } else {
+                $obj->$key = $value;
+            }
+        }
+        return $obj;
     }
 
-    public function fillFormCol()
+    public function arrayToObject($array)
     {
-        $newFormCol = $this->files->get('stubs/form.view.stub');
+        $object = new stdClass();
+        return $this->array_to_obj($array, $object);
+    }
+
+    public function formInputsInformations(array $formInputsNames)
+    {
+        $input = [];
+        $inputs = [];
+        $inputInformations = null;
+
+        foreach ($formInputsNames as $inputName) {
+            $inputUserResponse = $this->ask("Attributs du champ <bg=yellow;fg=black>" . strtoupper($inputName) . "</>:\n Exp: label=TEXTE_DU_LABEL|type=TYPE_DU_INPUT|placeholder=PLACEHOLDER_DU_INPUT:|required|size=TAILLE_DU_INPUT_DE_1_A_12|AUTRES_ATTRIBUTS");
+
+            if (!is_null($inputUserResponse)) {
+
+                // Ajout de name aux informations du input
+                $inputUserResponse = $inputUserResponse . "|name=$inputName";
+
+                // Séparation des infos en tableai
+                $inputInformations = explode("|", $inputUserResponse);
+
+                // Charge et organise les informations du input dans le tableau input
+                foreach ($inputInformations as $inputInformationLine) {
+                    $inputContent = explode('=', $inputInformationLine);
+
+                    if (array_key_exists(1, $inputContent)) {
+                        $input[$inputContent[0]] = $inputContent[1];
+                    } else {
+                        $input[$inputContent[0]] = null;
+                    }
+                }
+
+                $inputs[] = $this->arrayToObject($input);
+            }
+        }
+
+        return $inputs;
+    }
+
+    public function getFormRow(array $inputsInformations, string $modelVariable)
+    {
+        $row["tag_start"] = '<div class="row">';
+        $row["tag_end"] = '</div>';
+        $inputInfos = '';
+        $res = '';
+        $inputsCols = '';
+        $inputsRow = '';
+        $sizeLimit = 0;
+
+
+        foreach ($inputsInformations as $input) {
+            $inputInfos = $this->files->get('stubs/colForm.stub');
+            $inputInfos = str_replace('{{ name }}', $input->name, $inputInfos);
+            $inputInfos = str_replace('{{ size }}', $input->size, $inputInfos);
+            $inputInfos = str_replace('{{ label }}', $input->label, $inputInfos);
+            $inputInfos = str_replace('{{ modelVariable }}', $modelVariable, $inputInfos);
+            $inputInfos = str_replace('{{ migrationName }}', explode('_', $input->name)[0], $inputInfos);
+
+            foreach ($input as $attribute => $value) {
+                $infos = '';
+
+                if ($attribute != 'label' && $attribute != 'size' && $value != null) {
+                    $infos = $infos . $attribute . '="' . $value . '" ';
+                }
+
+                if ($value == null) {
+                    $infos = $infos . $attribute . ' ';
+                }
+            }
+            // dump($infos);
+
+            $inputInfos = str_replace('{{ infos }}', $infos, $inputInfos);
+
+            // $res = $res.$this->formRows($input->size, $inputInfos);
+
+            // dump($inputInfos);
+
+
+            $sizeLimit += $input->size;
+
+            if ($sizeLimit <= 12) {
+                if ($sizeLimit == 12) {
+                    $inputsRow = $inputsRow . "<row_start>\n" . $inputsCols . "\n" . $inputInfos . "\t\t\t\t\t<row_end>\n";
+                    $sizeLimit = 0;
+                } else {
+                    $inputsCols = $inputsCols . $inputInfos;
+                }
+            }
+        }
+
+            dump($inputsRow);
+
+        return $inputsRow;
+    }
+
+    public function formRows($inputSize, string $inputInformations)
+    {
+        $sizeLimit = 0;
+        $inputsCols = '';
+        $inputsRow = '';
+
+        $sizeLimit += $inputSize;
+
+        if ($sizeLimit <= 12) {
+            if ($sizeLimit == 12) {
+                $inputsRow = $inputsRow . "<row_start>" . $inputsCols . "\n" . $inputInformations . "<row_end>\n";
+                $sizeLimit = 0;
+            } else {
+                $inputsCols = $inputsCols . $inputInformations;
+            }
+        }
+
+        return $inputsRow;
+    }
+
+    public function getFormCol(array $fieldInformation)
+    {
+        $modelValue = lcfirst($this->argument());
+
+        $modelName = ucfirst($this->argument());
+
+        $explodeInput = explode('=', $fieldInformation);
+
+        $attribute = $explodeInput[0];
+        $value = $explodeInput[1];
+
+        $input[$attribute] = $value;
+
+        $newColForm = $this->files->get('stubs/colForm.stub');
+
+        // Applique les modifiactions sur le input en fonction de la valeur des attributs
+        if (is_null($input[$attribute])) {
+            $newColForm = str_replace('{{ singleAttribute }}', $input[$attribute], $newColForm);
+        } else {
+            if ($attribute == 'name') {
+                $newColForm = str_replace('{{ fieldName }}', $input[$attribute], $newColForm);
+                $input[$attribute] = $input[$attribute] . "_" . $modelValue;
+            } elseif ($attribute == 'size') {
+                $newColForm = str_replace('{{ size }}', $input[$attribute], $newColForm);
+            }
+
+            $newColForm = str_replace('{{ attribute }}', $input[$attribute], $newColForm);
+            $newColForm = str_replace('{{ value }}', $input[$value], $newColForm);
+        }
+
+
+        // $name = '';
+
+        // $modelValue = 'mission';
+
+        // $newColForm = $this->files->get('stubs/colForm.stub');
+
+        // $size = $this->ask("Taille du champs $name sur 12: ");
+
+        // $newColForm = str_replace('{{ size }}', $size, $newColForm);
+
+        // $newColForm = str_replace('{{ label }}', $this->ask("Entrer le Label du champs $name: "), $newColForm);
+
+        // $newColForm = str_replace('{{ name }}', $name, $newColForm);
+
+        // $newColForm = str_replace('{{ modelValue }}', $modelValue, $newColForm);
+
+        // $newColForm = str_replace('{{ required }}', ($this->ask("Le champs $name est obligatoire ? required/n: ") == 'required') ? 'required':'', $newColForm);
+
+        // $newColForm = str_replace('{{ type }}', $this->ask("Type de $name: "), $newColForm);
+
+        // $newColForm = str_replace('{{ placeholder }}', $this->ask("Placeholder de $name: "), $newColForm);
+
+        return $newColForm;
     }
 }
-

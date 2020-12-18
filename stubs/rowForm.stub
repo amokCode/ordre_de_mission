@@ -1,6 +1,6 @@
-//
-<div class="row">
-    {{ colContent }}
-</div>
+                    <!-- Champs {{ name }} -->
+                    <div class="row">
+                        {{ colContent }}
+                    </div>
 
 

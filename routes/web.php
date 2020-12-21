@@ -70,3 +70,43 @@ Route::group(['prefix' => 'eleve'], function () {
     Route::post('destroyAll', 'EleveController@destroyAll')->name('eleve.destroyAll'); // Suppression de plusieurs eleves
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Eleve Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'eleve'], function () {
+    Route::get('index', 'EleveController@index')->name('eleve.index'); // Liste des eleves
+
+    Route::get('create', 'EleveController@create')->name('eleve.create'); // Formulaire de création de eleve
+    Route::post('store', 'EleveController@store')->name('eleve.store'); // Enrégistrement de eleve
+
+    Route::get('{id}/show', 'EleveController@show')->name('eleve.show'); //Informations sur eleve
+
+    Route::get('{id}/edit', 'EleveController@edit')->name('eleve.edit'); //Formulaire d'édition de eleve
+    Route::post('{id}/update', 'EleveController@update')->name('eleve.update'); // Enregistrement des modification de eleve
+
+    Route::post('destroy', 'EleveController@destroy')->name('eleve.destroy'); // Suppression de eleve
+    Route::post('destroyAll', 'EleveController@destroyAll')->name('eleve.destroyAll'); // Suppression de plusieurs eleves
+});
+
+/*
+|--------------------------------------------------------------------------
+| Eleve Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'eleve'], function () {
+    Route::get('index', 'EleveController@index')->name('eleve.index'); // Liste des eleves
+
+    Route::get('create', 'EleveController@create')->name('eleve.create'); // Formulaire de création de eleve
+    Route::post('store', 'EleveController@store')->name('eleve.store'); // Enrégistrement de eleve
+
+    Route::get('{id}/show', 'EleveController@show')->name('eleve.show'); //Informations sur eleve
+
+    Route::get('{id}/edit', 'EleveController@edit')->name('eleve.edit'); //Formulaire d'édition de eleve
+    Route::post('{id}/update', 'EleveController@update')->name('eleve.update'); // Enregistrement des modification de eleve
+
+    Route::post('destroy', 'EleveController@destroy')->name('eleve.destroy'); // Suppression de eleve
+    Route::post('destroyAll', 'EleveController@destroyAll')->name('eleve.destroyAll'); // Suppression de plusieurs eleves
+});

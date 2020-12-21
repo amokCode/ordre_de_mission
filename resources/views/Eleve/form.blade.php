@@ -8,12 +8,11 @@
                 <form action="{{ ($title == 'Nouvel Eleve') ? route('eleve.store') : route('eleve.update', $eleve->id) }}" method="POST">
                     @csrf
                     
-					<div class="row">
-                        <!-- Champ nom_eleve -->
-                        <div class="col-md-12">
+					<div class="row">                        <!-- Champ nom -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label> Nom Eleve:</label>
-                                <input class="form-control" name="nom_eleve" value="{{ $eleve->nom ?? old('nom_eleve') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <label> Nom:</label>
+                                <input class="form-control" name="nom" value="{{ $eleve->nom ?? old('nom') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -21,14 +20,12 @@
                                 @enderror --}}
                             </div>
                         </div>
-					</div>
 
-					<div class="row">
-                        <!-- Champ prenom_eleve -->
-                        <div class="col-md-12">
+                        <!-- Champ prenom -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label> Prenom Eleve:</label>
-                                <input class="form-control" name="prenom_eleve" value="{{ $eleve->prenom ?? old('prenom_eleve') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <label> Prenom:</label>
+                                <input class="form-control" name="prenom" value="{{ $eleve->prenom ?? old('prenom') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}

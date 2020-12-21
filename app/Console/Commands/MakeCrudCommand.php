@@ -56,22 +56,22 @@ class MakeCrudCommand extends Command
     {
         $argument = $this->argument('name');
         // Met à jour le model ou le créé si il n'existe pas
-        // $this->appendModel($argument);
+        $this->appendModel($argument);
 
         // Met à jour le controller ou le créé si il n'existe pas
-        // $this->appendController($argument);
+        $this->appendController($argument);
 
-        // // Créé les vues et les met à jour
-        // $this->appendViews($argument);
+        // Créé les vues et les met à jour
+        $this->appendViews($argument);
 
-        // $this->appendForm($argument);
+        $this->appendForm($argument);
         $this->appendIndex($argument);
 
         // Met à jour le menu
-        // $this->appendMenu($argument);
+        $this->appendMenu($argument);
 
-        // // Met à jour les routes
-        // $this->appendRoutes($this->argument('name'));
+        // Met à jour les routes
+        $this->appendRoutes($this->argument('name'));
 
         // $this->getFieldMigration($this->argument('name'));
 
@@ -176,7 +176,6 @@ class MakeCrudCommand extends Command
 
 
         foreach ($views as $viewName) {
-
             $viewPath = "resources/views/$modelName/$viewName.blade.php";
 
             $this->createDir($viewPath);
@@ -271,7 +270,7 @@ class MakeCrudCommand extends Command
 
         // Liste des champs d'une migration spécifique depuis le model
         foreach ($this->getMigrationField($modelName) as $migrationField) {
-            $formInputsNames[] = $migrationField . "_" . $modelVariable;
+            $formInputsNames[] = $migrationField;
         }
 
         // Informations sur chaque champs pour le formulaire
@@ -415,5 +414,49 @@ class MakeCrudCommand extends Command
         $this->files->append('resources/views/layouts/menuChild.blade.php', $menu);
 
         $this->info('Menu bien mis à jour');
+    }
+
+    public function appendIndex(string $argument)
+    {
+        $modelName = ucfirst($argument);
+        $modelVariable = lcfirst($argument);
+        $indexPath = "resources/views/$modelName/index.blade.php";
+        $columnsValues = '';
+        $columnsNames = '';
+
+        $migrationFields = $this->getMigrationField($argument);
+        $listFieldMigration = '';
+        $titleFieldMigration = '';
+
+        foreach ($migrationFields as $migration) {
+            $listFieldMigration = $listFieldMigration.$migration.'|';
+            $titleFieldMigration = ucfirst($titleFieldMigration.$migration).'|';
+        }
+        $tableFieldChoices = $this->ask("Entrer la liste des champs a afficher pour le tableau de index\n Exp: $listFieldMigration");
+
+        $tableFieldChoices = explode('|', $tableFieldChoices);
+
+        foreach ($tableFieldChoices as $field) {
+            $columnsValues = $columnsValues."\t\t\t\t\t\t\t<td>{{ $".$modelVariable."->$field }}</td>\n";
+        }
+
+        $titleFieldMigration = $this->ask("Entrer le titre de chaque champs en suivant l'ordre de la liste precedente\n Exp: $titleFieldMigration");
+
+        $titleFieldMigration = explode('|', $titleFieldMigration);
+
+        foreach ($titleFieldMigration as $title) {
+            $columnsNames = $columnsNames."\t\t\t\t\t\t\t".'<th class="filter">'.$title."</th>\n";
+        }
+
+        $newIndexContent = $this->files->get('stubs/index.view.stub');
+        $newIndexContent = str_replace('{{ modelName }}', $modelName, $newIndexContent);
+        $newIndexContent = str_replace('{{ modelVariable }}', $modelVariable, $newIndexContent);
+        $newIndexContent = str_replace('{{ columnName }}', $columnsNames, $newIndexContent);
+        $newIndexContent = str_replace('{{ columnValue }}', $columnsValues, $newIndexContent);
+
+        $this->files->replace($indexPath, '');
+        $this->files->append($indexPath, $newIndexContent);
+
+        $this->info('Index bien mis a jour.');
     }
 }

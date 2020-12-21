@@ -1,6 +1,0 @@
-                    <!-- Champs {{ name }} -->
-                    <div class="row">
-                        {{ colContent }}
-                    </div>
-
-

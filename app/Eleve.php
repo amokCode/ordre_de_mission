@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Eleve extends Model
 {
-	protected $guarded = [];
+    protected $guarded = [];
 }

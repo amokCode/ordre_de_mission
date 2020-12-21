@@ -17,5 +17,4 @@ Route::group(['prefix' => '{{ modelVariable }}'], function () {
 
     Route::post('destroy', '{{ controllerName }}@destroy')->name('{{ modelVariable }}.destroy'); // Suppression de {{ modelVariable }}
     Route::post('destroyAll', '{{ controllerName }}@destroyAll')->name('{{ modelVariable }}.destroyAll'); // Suppression de plusieurs {{ modelVariable }}s
-
 });

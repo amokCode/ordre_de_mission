@@ -7,12 +7,12 @@
             <div class="card-body">
                 <form action="{{ ($title == 'Nouvel Eleve') ? route('eleve.store') : route('eleve.update', $eleve->id) }}" method="POST">
                     @csrf
-                    <row_start>
-
+                    
+					<div class="row">
                         <!-- Champ nom_eleve -->
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label> Nom du Test:</label>
+                                <label> Nom Eleve:</label>
                                 <input class="form-control" name="nom_eleve" value="{{ $eleve->nom ?? old('nom_eleve') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
@@ -21,13 +21,13 @@
                                 @enderror --}}
                             </div>
                         </div>
-					<row_end>
-<row_start>
+					</div>
 
+					<div class="row">
                         <!-- Champ prenom_eleve -->
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label> Prenom du Test:</label>
+                                <label> Prenom Eleve:</label>
                                 <input class="form-control" name="prenom_eleve" value="{{ $eleve->prenom ?? old('prenom_eleve') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
@@ -36,7 +36,7 @@
                                 @enderror --}}
                             </div>
                         </div>
-					<row_end>
+					</div>
 
                     <div class="text-right">
                         <a href="{{ route('eleve.index') }}" class="btn btn-danger"><i class="fa fa-close"></i> Fermer</a>

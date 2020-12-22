@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Model\Mission;
 use Illuminate\Console\Command;
-use File;
-use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
 use stdClass;
@@ -17,9 +14,7 @@ class MakeCrudCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:crud
-        {name}
-        {--custom : Choix au user de mettre les differetes options des inputs, de choisir les dispositions et de choisir les champs visibles du index.}';
+    protected $signature = 'make:crud {name}';
 
     /**
      * The console command description.
@@ -72,6 +67,8 @@ class MakeCrudCommand extends Command
 
         // Met à jour les routes
         $this->appendRoutes($this->argument('name'));
+
+        $this->info("Crud de $argument créé avec succès.");
 
         // $this->getFieldMigration($this->argument('name'));
 
@@ -324,19 +321,19 @@ class MakeCrudCommand extends Command
         $inputInformations = '';
 
         foreach ($formInputsNames as $inputName) {
-            $inputUserResponse = $this->ask("Attributs du champ <bg=yellow;fg=black>" . strtoupper($inputName) . "</>:\n Exp: label=TEXTE_DU_LABEL|type=TYPE_DU_INPUT|placeholder=PLACEHOLDER_DU_INPUT:|required|size=TAILLE_DU_INPUT_DE_1_A_12|AUTRES_ATTRIBUTS");
+            $inputUserResponse = $this->ask("Attributs du champ <bg=yellow;fg=black>" . strtoupper($inputName) . "</>:\n Exp: label=>TEXTE_DU_LABEL|type=>TYPE_DU_INPUT|placeholder=>PLACEHOLDER_DU_INPUT:|required|size=>TAILLE_DU_INPUT_DE_1_A_12|AUTRES_ATTRIBUTS");
 
             if (!is_null($inputUserResponse)) {
 
                 // Ajout de name aux informations du input
-                $inputUserResponse = $inputUserResponse . "|name=$inputName";
+                $inputUserResponse = $inputUserResponse . "|name=>$inputName";
 
                 // Séparation des infos en tableai
                 $inputInformations = explode("|", $inputUserResponse);
 
                 // Charge et organise les informations du input dans le tableau input
                 foreach ($inputInformations as $inputInformationLine) {
-                    $inputContent = explode('=', $inputInformationLine);
+                    $inputContent = explode('=>', $inputInformationLine);
 
                     if (array_key_exists(1, $inputContent)) {
                         $input[$inputContent[0]] = $inputContent[1];
@@ -431,11 +428,10 @@ class MakeCrudCommand extends Command
 
         $migrationFields = $this->getMigrationField($argument);
         $listFieldMigration = '';
-        $titleFieldMigration = '';
 
         foreach ($migrationFields as $migration) {
             $listFieldMigration = $listFieldMigration.$migration.'|';
-            $titleFieldMigration = $titleFieldMigration.ucfirst($migration).'|';
+            // $titleFieldMigration = $titleFieldMigration.ucfirst($migration).'|';
         }
         $tableFieldChoices = $this->ask("Entrer la liste des champs a afficher pour le tableau de index\n Exp: $listFieldMigration");
 
@@ -443,14 +439,7 @@ class MakeCrudCommand extends Command
 
         foreach ($tableFieldChoices as $field) {
             $columnsValues = $columnsValues."\t\t\t\t\t\t\t<td>{{ $".$modelVariable."->$field }}</td>\n";
-        }
-
-        $titleFieldMigration = $this->ask("Entrer le titre de chaque champs en suivant l'ordre de la liste precedente\n Exp: $titleFieldMigration");
-
-        $titleFieldMigration = explode('|', $titleFieldMigration);
-
-        foreach ($titleFieldMigration as $title) {
-            $columnsNames = $columnsNames."\t\t\t\t\t\t\t".'<th class="filter">'.$title."</th>\n";
+            $columnsNames = $columnsNames."\t\t\t\t\t\t\t".'<th class="filter">'.ucfirst($field)."</th>\n";
         }
 
         $newIndexContent = $this->files->get('stubs/index.view.stub');

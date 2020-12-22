@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "894ec0c982f9c70bb79f558cfbf41aba",
+    "content-hash": "4985008304438c4285e4d9cef75237d9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5054,57 +5054,6 @@
                 "test"
             ],
             "time": "2020-07-09T08:09:16+00:00"
-        },
-        {
-            "name": "maddhatter/laravel-view-generator",
-            "version": "v0.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maddhatter/laravel-view-generator.git",
-                "reference": "0deb4e3f740176bfd81703a6b0d245ac8bf344d2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maddhatter/laravel-view-generator/zipball/0deb4e3f740176bfd81703a6b0d245ac8bf344d2",
-                "reference": "0deb4e3f740176bfd81703a6b0d245ac8bf344d2",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "~5.0|~6.0|~7.0",
-                "illuminate/filesystem": "~5.0|~6.0|~7.0",
-                "illuminate/support": "~5.0|~6.0|~7.0",
-                "illuminate/view": "~5.0|~6.0|~7.0",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "MaddHatter\\ViewGenerator\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "MaddHatter\\ViewGenerator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shawn Tunney",
-                    "email": "shawn.tunney@gmail.com"
-                }
-            ],
-            "description": "Tiny package to create a make:view command for Laravel 5+",
-            "support": {
-                "issues": "https://github.com/maddhatter/laravel-view-generator/issues",
-                "source": "https://github.com/maddhatter/laravel-view-generator/tree/master"
-            },
-            "time": "2020-03-09T12:48:44+00:00"
         },
         {
             "name": "maximebf/debugbar",

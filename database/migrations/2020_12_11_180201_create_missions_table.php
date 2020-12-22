@@ -15,7 +15,7 @@ class CreateMissionsTable extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero')->nullable();
+            $table->string('nom')->nullable();
             $table->string('nom_client');
             $table->string('lieu');
             $table->string('date_debut');
@@ -30,8 +30,8 @@ class CreateMissionsTable extends Migration
             $table->text('arrete')->nullable();
             $table->string('statut');
             $table->string('date_report')->nullable();
-            $table->string('libelle_depense');
-            $table->string('prix_depense');
+            $table->string('libelle_depense')->nullable();
+            $table->string('prix_depense')->nullable();
             $table->string('qte_depense')->nullable();
             $table->string('montant_depense')->nullable();
             $table->string('total_depense')->nullable();

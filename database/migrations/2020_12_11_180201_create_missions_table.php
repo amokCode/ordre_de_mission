@@ -17,7 +17,7 @@ class CreateMissionsTable extends Migration
             $table->id();
             $table->integer('numero')->nullable();
             $table->string('nom_client');
-            // $table->string('lieu');
+            $table->string('lieu');
             $table->string('date_debut');
             $table->string('date_fin');
             $table->string('heure_debut');

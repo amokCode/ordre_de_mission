@@ -24,7 +24,7 @@
 
             <div class="card card-table">
                 <div class="card-header bg-primary">
-                    <h4 class="card-title text-center text-light"> Liste des {{ modelName }} </h4>
+                    <h4 class="card-title text-center text-light"> Liste des {{ modelName }}s </h4>
                 </div>
                 <div class="card-body">
                     <div class="">

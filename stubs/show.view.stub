@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('{{ modelName }}.form', [$title='Détails de Element', $show=true])
+@include('{{ modelName }}.form', [$title='Détails de {{ modelName }}', $show=true])
 
 @endsection
 

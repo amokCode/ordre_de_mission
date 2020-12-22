@@ -321,7 +321,7 @@ class MakeCrudCommand extends Command
     {
         $input = [];
         $inputs = [];
-        $inputInformations = null;
+        $inputInformations = '';
 
         foreach ($formInputsNames as $inputName) {
             $inputUserResponse = $this->ask("Attributs du champ <bg=yellow;fg=black>" . strtoupper($inputName) . "</>:\n Exp: label=TEXTE_DU_LABEL|type=TYPE_DU_INPUT|placeholder=PLACEHOLDER_DU_INPUT:|required|size=TAILLE_DU_INPUT_DE_1_A_12|AUTRES_ATTRIBUTS");
@@ -345,7 +345,9 @@ class MakeCrudCommand extends Command
                     }
                 }
 
+                // dump($input,$this->arrayToObject($input),"\n\n");
                 $inputs[] = $this->arrayToObject($input);
+                $input = [];
             }
         }
 
@@ -357,10 +359,10 @@ class MakeCrudCommand extends Command
         $row["tag_start"] = '<div class="row">';
         $row["tag_end"] = '</div>';
         $inputInfos = '';
-        $res = '';
         $inputsCols = '';
         $inputsRow = '';
         $sizeLimit = 0;
+        $infos = '';
 
         foreach ($inputsInformations as $input) {
             $inputInfos = $this->files->get('stubs/colForm.stub');
@@ -368,10 +370,10 @@ class MakeCrudCommand extends Command
             $inputInfos = str_replace('{{ size }}', $input->size, $inputInfos);
             $inputInfos = str_replace('{{ label }}', $input->label, $inputInfos);
             $inputInfos = str_replace('{{ modelVariable }}', $modelVariable, $inputInfos);
-            $inputInfos = str_replace('{{ migrationName }}', explode('_', $input->name)[0], $inputInfos);
+            $inputInfos = str_replace('{{ migrationName }}', $input->name, $inputInfos);
 
             foreach ($input as $attribute => $value) {
-                $infos = '';
+                // $infos = '';
 
                 if ($attribute != 'label' && $attribute != 'size' && $value != null) {
                     $infos = $infos.$attribute.'="'.$value.'" ';
@@ -381,17 +383,20 @@ class MakeCrudCommand extends Command
                     $infos = $infos.$attribute.' ';
                 }
             }
-
             $inputInfos = str_replace('{{ infos }}', $infos, $inputInfos);
+            $infos = '';
 
             $sizeLimit += $input->size;
+            // dump($sizeLimit);
 
             if ($sizeLimit <= 12) {
                 if ($sizeLimit == 12) {
                     $inputsRow = $inputsRow."\n\t\t\t\t\t".$row['tag_start'].$inputsCols."\n".$inputInfos."\t\t\t\t\t".$row['tag_end']."\n";
                     $sizeLimit = 0;
+                    $inputsCols = '';
                 } else {
                     $inputsCols = $inputsCols . $inputInfos;
+
                 }
             }
         }
@@ -430,7 +435,7 @@ class MakeCrudCommand extends Command
 
         foreach ($migrationFields as $migration) {
             $listFieldMigration = $listFieldMigration.$migration.'|';
-            $titleFieldMigration = ucfirst($titleFieldMigration.$migration).'|';
+            $titleFieldMigration = $titleFieldMigration.ucfirst($migration).'|';
         }
         $tableFieldChoices = $this->ask("Entrer la liste des champs a afficher pour le tableau de index\n Exp: $listFieldMigration");
 

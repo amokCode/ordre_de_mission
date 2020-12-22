@@ -1,1 +1,0 @@
-resources/views/test.blade.php

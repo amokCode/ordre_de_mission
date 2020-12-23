@@ -27,7 +27,7 @@
                     <h4 class="card-title text-center text-light"> Liste des Missions </h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="">
                         <table id="table" class="table mb-0 table-hover">
                             <thead>
                                 <tr>
@@ -39,18 +39,12 @@
                                         </div>
                                     </th>
                                     <th>ID</th>
-                                    <th class="filter">Nom_client</th>
-                                    <th class="filter">Lieu</th>
-                                    <th class="filter">Date_debut</th>
-                                    <th class="filter">Heure_debut</th>
-                                    <th class="filter">Date_fin</th>
-                                    <th class="filter">Heure_fin</th>
-                                    <th class="filter">Responsable</th>
+                                    <th class="filter">Date de début</th>
+                                    <th class="filter">Nom du Client</th>
                                     <th class="filter">Description</th>
                                     <th class="filter">Statut</th>
                                     <th class="filter">Arrete</th>
                                     <th class="filter">Date_report</th>
-                                    <th class="filter">Total_depense</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -64,20 +58,20 @@
                                             </div>
                                         </td>
                                         <td data-id="{{ $mission->id }}">#{{ $loop->index + 1 }}</td>
-                                        {{-- <td>{{ $car->nom }}</td> --}}
-                                        							<td>{{ $mission->nom_client }}</td>
-							<td>{{ $mission->lieu }}</td>
-							<td>{{ $mission->date_debut }}</td>
-							<td>{{ $mission->heure_debut }}</td>
-							<td>{{ $mission->date_fin }}</td>
-							<td>{{ $mission->heure_fin }}</td>
-							<td>{{ $mission->responsable }}</td>
-							<td>{{ $mission->description }}</td>
-							<td><span class="bg-warning-light text-warning">{{ $mission->statut }}</span></td>
-							<td>{{ $mission->arrete }}</td>
-							<td>{{ $mission->date_report }}</td>
-							<td>{{ $mission->total_depense }}</td>
-
+							            <td>{{ $mission->date_debut }}</td>
+                                        <td>{{ $mission->nom_client }}</td>
+							            <td>{{ is_null($mission->description)? "..." : $mission->description }}</td>
+							            <td>
+                                            <span
+                                                @if($mission->statut == "Terminé") class="bg-success-light p-1 text-success"
+                                                @elseif($mission->statut == "En Cours") class="bg-warning-light p-1 text-warning"
+                                                @else class="bg-danger-light p-1 text-danger"
+                                                @endif>
+                                                {{ $mission->statut }}
+                                            </span>
+                                        </td>
+                                        <td>{{ is_null($mission->arrete)? "..." : $mission->arrete }}</td>
+                                        <td>{{ is_null($mission->date_report)? "..." : $mission->date_report }}</td>
                                         <td>
                                             <a href="{{ route('mission.show', $mission->id) }}"
                                                 class="btn bg-success-light btn-nav btn-sm mr-1" title="Voir">

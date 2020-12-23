@@ -7,13 +7,25 @@
             <div class="card-body">
                 <form action="{{ ($title == 'Nouvel Mission') ? route('mission.store') : route('mission.update', $mission->id) }}" method="POST">
                     @csrf
-
+                    <h3>Informations générales</h3>
 					<div class="row">
                         <!-- Champ nom -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label> Nom:</label>
-                                <input class="form-control" type="text" name="nom" value="{{ $mission->nom ?? old('nom') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <label> Dénomination<span class="text-danger">*</span>:</label>
+                                <input class="form-control" required type="search" name="nom" placeholder="Exp: Dépôt Mobile money" value="{{ $mission->nom ?? old('nom') }}" {{ ($show) ? 'disabled' : ''}}>
+                                {{-- @error('')
+                                    <span class="invalid-feedback">
+                                        {{ $errors->first('') }}
+                                    </span>
+                                @enderror --}}
+                            </div>
+                        </div>
+                        <!-- Champ responsable -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label> Responsable<span class="text-danger">*</span>:</label>
+                                <input class="form-control" required type="text" name="responsable" value="{{ $mission->responsable ?? "Amoq DOPEGNON" }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -28,7 +40,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label> Nom du Client<span class="text-danger">*</span>:</label>
-                                <input class="form-control" required type="text" name="nom_client" value="{{ $mission->nom_client ?? old('nom_client') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <input class="form-control" required type="search" name="nom_client" value="{{ $mission->nom_client ?? old('nom_client') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -41,7 +53,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label> Lieu<span class="text-danger">*</span>:</label>
-                                <input class="form-control" required type="text" name="lieu" value="{{ $mission->lieu ?? old('lieu') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <input class="form-control" required type="search" name="lieu" value="{{ $mission->lieu ?? old('lieu') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -55,7 +67,7 @@
                         <!-- Champ date_debut -->
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label> Date Debut<span class="text-danger">*</span>:</label>
+                                <label> Date Début<span class="text-danger">*</span>:</label>
                                 <input class="form-control" required type="date" name="date_debut" value="{{ $mission->date_debut ?? old('date_debut') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
@@ -68,8 +80,8 @@
                         <!-- Champ heure_debut -->
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label> Heure Debut<span class="text-danger">*</span>:</label>
-                                <input class="form-control" required type="time" name="heure_debut" value="{{ $mission->heure_debut ?? old('heure_debut') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <label> Heure Début<span class="text-danger">*</span>:</label>
+                                <input class="form-control" type="time" name="heure_debut" value="{{ $mission->heure_debut ?? old('heure_debut') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -95,7 +107,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label> Heure Fin<span class="text-danger">*</span>:</label>
-                                <input class="form-control" required type="time" name="heure_fin" value="{{ $mission->heure_fin ?? old('heure_fin') }}" {{ ($show) ? 'disabled' : ''}}>
+                                <input class="form-control" type="time" name="heure_fin" value="{{ $mission->heure_fin ?? old('heure_fin') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -105,40 +117,25 @@
                         </div>
 					</div>
 
-					<div class="row">
-                        <!-- Champ responsable -->
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> Responsable<span class="text-danger">*</span>:</label>
-                                <input class="form-control" required type="text" name="responsable" value="{{ $mission->responsable ?? old('responsable') }}" {{ ($show) ? 'disabled' : ''}}>
-                                {{-- @error('')
-                                    <span class="invalid-feedback">
-                                        {{ $errors->first('') }}
-                                    </span>
-                                @enderror --}}
-                            </div>
-                        </div>
-					</div>
-
-					<div class="row">
+					{{-- <div class="row">
                         <!-- Champ description -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label> Description:</label>
                                 <textarea class="form-control" name="description" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->description ?? old('description') }}</textarea>
-                                {{-- <input class="form-control" type="text" name="description" value="" > --}}
-                                {{-- @error('')
+                                <input class="form-control" type="text" name="description" value="" >
+                                @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
                                     </span>
-                                @enderror --}}
+                                @enderror
                             </div>
                         </div>
-					</div>
-
+					</div> --}}
+                    <h3 class="mt-4">Informations sur le Terrain</h3>
 					<div class="row">
                         <!-- Champ observation -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label> Observation:</label>
                                 <textarea class="form-control" name="observation" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->observation ?? old('observation') }}</textarea>
@@ -149,11 +146,8 @@
                                 @enderror --}}
                             </div>
                         </div>
-					</div>
-
-					<div class="row">
                         <!-- Champ solution -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label> Solution:</label>
                                 <textarea class="form-control" name="solution" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->solution ?? old('solution') }}</textarea>
@@ -167,11 +161,12 @@
 					</div>
 
 					<div class="row">
-                        <!-- Champ recommandation -->
-                        <div class="col-md-12">
+                        <!-- Champ arrete -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label> Recommandation:</label>
-                                <textarea class="form-control" name="recommandation" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->recommandation ?? old('recommandation') }}</textarea>
+                                <label> Arrêté:</label>
+                                <input class="form-control" type="text" name="arrete" value="{{ $mission->arrete ?? old('arrete') }}" {{ ($show) ? 'disabled' : ''}}>
+                                {{-- <textarea class="form-control" name="arrete" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->arrete ?? old('arrete') }}</textarea> --}}
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}
@@ -179,14 +174,11 @@
                                 @enderror --}}
                             </div>
                         </div>
-					</div>
-
-					<div class="row">
-                        <!-- Champ arrete -->
-                        <div class="col-md-12">
+                        <!-- Champ prochaine_rencontre -->
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label> Arreté:</label>
-                                <textarea class="form-control" name="arrete" {{ ($show) ? 'disabled' : ''}} rows="5">{{ $mission->arrete ?? old('arrete') }}</textarea>
+                                <label> Prochaine rencontre:</label>
+                                <input class="form-control" type="date" name="prochaine_rencontre" value="{{ $mission->prochaine_rencontre ?? old('prochaine_rencontre') }}" {{ ($show) ? 'disabled' : ''}}>
                                 {{-- @error('')
                                     <span class="invalid-feedback">
                                         {{ $errors->first('') }}

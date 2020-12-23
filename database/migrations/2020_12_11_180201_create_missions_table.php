@@ -16,18 +16,17 @@ class CreateMissionsTable extends Migration
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
             $table->string('nom')->nullable();
+            $table->string('responsable');
             $table->string('nom_client');
             $table->string('lieu');
             $table->string('date_debut');
+            $table->string('heure_debut')->nullable();
             $table->string('date_fin');
-            $table->string('heure_debut');
-            $table->string('heure_fin');
-            $table->string('responsable');
-            $table->text('description');
+            $table->string('heure_fin')->nullable();
             $table->text('observation')->nullable();
             $table->text('solution')->nullable();
-            $table->text('recommandation')->nullable();
             $table->text('arrete')->nullable();
+            $table->text('prochaine_rencontre')->nullable();
             $table->string('statut');
             $table->string('date_report')->nullable();
             $table->string('libelle_depense')->nullable();

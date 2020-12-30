@@ -14,6 +14,24 @@
     <a href="javascript:void(0);" id="toggle_btn">
         <i class="fe fe-text-align-left"></i>
     </a>
+    <a href="#" class="menu-button">
+        <i class="fe fe-arrow-left"></i>
+    </a>
+    <a href="{{ route('home') }}" class="menu-button">
+        <i class="fe fe-home"></i>
+    </a>
+    <a href="#" class="menu-button">
+        <i class="fe fe-arrow-right"></i>
+    </a>
+    {{-- <a href="#" class="menu-button">
+        <i class="fe fe-home"></i>
+    </a> --}}
+    {{-- <a href="javascript:void(0);" id="toggle_btn">
+        <i class="fe fe-text-align-left"></i>
+    </a>
+    <a href="javascript:void(0);" id="toggle_btn">
+        <i class="fe fe-text-align-left"></i>
+    </a> --}}
 
     {{-- <div class="top-nav-search">
         <form>
